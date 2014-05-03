@@ -4,19 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 
 public class PkApplyLauncher
 {
+	// General Private Constants
+	private static final String MARKET_URI = "market://details?id=";
+	
 	// Launcher Type Constants
 	public static final int NOVA = 0;
 	public static final int APEX = 1;
 	public static final int HOLO = 2;
+	public static final int ADW = 3;
+	public static final int ACTION = 4;
+	public static final int AVIATE = 5;
+	public static final int INSPIRE = 6;
+	public static final int SMART = 7;
 	
 	// Static Launcher Objects
 	public static Launcher launcherNova = getNovaLauncher();
 	public static Launcher launcherApex = getApexLauncher();
 	public static Launcher launcherHolo = getHoloLauncher();
+	public static Launcher launcherAdw  = getAdwLauncher();
+	public static Launcher launcherAction  = getActionLauncher();
+	public static Launcher launcherAviate  = getAviateLauncher();
+	public static Launcher launcherInspire  = getInspireLauncher();
+	public static Launcher launcherSmart  = getSmartLauncher();
 	
 	// Static Launcher List
 	public static List<Launcher> launcherList = getLauncherList();
@@ -25,34 +40,119 @@ public class PkApplyLauncher
 	{
 		switch(launcher.getLauncher()) {
 			case NOVA:
-				Intent nova = new Intent(launcher.getAction());
-				nova.setPackage(launcher.getPackage());
-				nova.putExtra(launcher.getExtraAction("TYPE"), "GO");
-				nova.putExtra(launcher.getExtraAction("PACKAGE"), packageName);
-				nova.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				activity.startActivity(nova);
-				
-				return true;
+				try {
+					Intent nova = new Intent(launcher.getAction());
+					nova.setPackage(launcher.getPackage());
+					nova.putExtra(launcher.getExtraString("TYPE"), "GO");
+					nova.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					nova.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(nova);
+
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
 			case APEX:
-				Intent apex = new Intent(launcher.getAction());
-				apex.setPackage(launcher.getPackage());
-				apex.putExtra(launcher.getExtraAction("PACKAGE"), packageName);
-				apex.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				activity.startActivity(apex);
-				
-				return true;
+				try {
+					Intent apex = new Intent(launcher.getAction());
+					apex.setPackage(launcher.getPackage());
+					apex.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					apex.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(apex);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
 			case HOLO:
-				Intent holo = new Intent(launcher.getAction());
-				holo.setPackage(launcher.getPackage());
-				holo.putExtra(launcher.getExtraAction("PACKAGE"), packageName);
-				holo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				activity.startActivity(holo);
-				
-				return true;
+				try {
+					Intent holo = new Intent(launcher.getAction());
+					holo.setPackage(launcher.getPackage());
+					holo.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					holo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(holo);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case ADW:
+				try {
+					Intent adw = new Intent(launcher.getAction());
+					adw.setPackage(launcher.getPackage());
+					adw.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					adw.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(adw);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case ACTION:
+				try {
+					Intent action = activity.getPackageManager().getLaunchIntentForPackage(launcher.getPackage());
+					action.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					activity.startActivity(action);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case AVIATE:
+				try {
+					Intent aviate = new Intent(launcher.getAction());
+					aviate.setPackage(launcher.getPackage());
+					aviate.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					aviate.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(aviate);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case INSPIRE:
+				try {
+					Intent inspire = new Intent(launcher.getAction());
+					inspire.setPackage(launcher.getPackage());
+					inspire.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					inspire.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(inspire);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case SMART:
+				try {
+					Intent smart = new Intent(launcher.getAction());
+					smart.setPackage(launcher.getPackage());
+					smart.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					smart.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(smart);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
 			default:
 				// TODO Add Generic Apply Code
 				return false;
 		}
+	}
+	
+	public static void launchPlayStore(Launcher launcher, Activity activity)
+	{
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(MARKET_URI + launcher.getPackage()));
+		activity.startActivity(intent);
 	}
 	
 	public static List<Launcher> getLauncherList()
@@ -61,6 +161,11 @@ public class PkApplyLauncher
 		list.add(launcherNova);
 		list.add(launcherApex);
 		list.add(launcherHolo);
+		list.add(launcherAdw);
+		list.add(launcherAction);
+		list.add(launcherAviate);
+		list.add(launcherInspire);
+		list.add(launcherSmart);
 		
 		return list;
 	}
@@ -72,8 +177,8 @@ public class PkApplyLauncher
 		launcher.setName("Nova");
 		launcher.setPackage("com.teslacoilsw.launcher");
 		launcher.setAction("com.teslacoilsw.launcher.APPLY_ICON_THEME");
-		launcher.setExtraAction("TYPE", "com.teslacoilsw.launcher.extra.ICON_THEME_TYPE");
-		launcher.setExtraAction("PACKAGE", "com.teslacoilsw.launcher.extra.ICON_THEME_PACKAGE");
+		launcher.putExtra("TYPE", "com.teslacoilsw.launcher.extra.ICON_THEME_TYPE");
+		launcher.putExtra("PACKAGE", "com.teslacoilsw.launcher.extra.ICON_THEME_PACKAGE");
 		
 		return launcher;
 	}
@@ -85,7 +190,7 @@ public class PkApplyLauncher
 		launcher.setName("Apex");
 		launcher.setPackage("com.anddoes.launcher");
 		launcher.setAction("com.anddoes.launcher.SET_THEME");
-		launcher.setExtraAction("PACKAGE", "com.anddoes.launcher.THEME_PACKAGE_NAME");
+		launcher.putExtra("PACKAGE", "com.anddoes.launcher.THEME_PACKAGE_NAME");
 		
 		return launcher;
 	}
@@ -97,7 +202,68 @@ public class PkApplyLauncher
 		launcher.setName("Holo");
 		launcher.setPackage("com.mobint.hololauncher");
 		launcher.setAction("com.mobint.hololauncher.SettingsActivity");
-		launcher.setExtraAction("PACKAGE", "pkgname");
+		launcher.putExtra("PACKAGE", "pkgname");
+		
+		return launcher;
+	}
+	
+	public static Launcher getAdwLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(ADW);
+		launcher.setName("ADW");
+		launcher.setPackage("org.adw.launcher");
+		launcher.setAction("org.adw.launcher.SET_THEME");
+		launcher.putExtra("PACKAGE", "org.adw.launcher.theme.NAME");
+		
+		return launcher;
+	}
+	
+	public static Launcher getActionLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(ACTION);
+		launcher.setName("Action");
+		launcher.setPackage("com.actionlauncher.playstore");
+		launcher.setAction("android.intent.action.MAIN"); // TODO TEST THROUGHOULY
+		launcher.putExtra("PACKAGE", "apply_icon_pack");
+		// TODO Maybe limit component
+		
+		return launcher;
+	}
+	
+	public static Launcher getAviateLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(AVIATE);
+		launcher.setName("Aviate");
+		launcher.setPackage("com.tul.aviate");
+		launcher.setAction("com.tul.aviate.SET_THEME");
+		launcher.putExtra("PACKAGE", "THEME_PACKAGE");
+		
+		return launcher;
+	}
+	
+	public static Launcher getInspireLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(INSPIRE);
+		launcher.setName("Inspire");
+		launcher.setPackage("com.bam.android.inspirelauncher");
+		launcher.setAction("com.bam.android.inspirelauncher.action.ACTION_SET_THEME");
+		launcher.putExtra("PACKAGE", "theme_name");
+		
+		return launcher;
+	}
+	
+	public static Launcher getSmartLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(SMART);
+		launcher.setName("Smart");
+		launcher.setPackage("ginlemon.flowerfree");
+		launcher.setAction("ginlemon.smartlauncher.setGSLTHEME");
+		launcher.putExtra("PACKAGE", "package");
 		
 		return launcher;
 	}
