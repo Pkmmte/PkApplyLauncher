@@ -22,6 +22,9 @@ public class PkApplyLauncher
 	public static final int AVIATE = 5;
 	public static final int INSPIRE = 6;
 	public static final int SMART = 7;
+	public static final int ATOM = 8;
+	public static final int GO = 9;
+	public static final int NEXT = 10;
 	
 	// Static Launcher Objects
 	public static Launcher launcherNova = getNovaLauncher();
@@ -32,6 +35,9 @@ public class PkApplyLauncher
 	public static Launcher launcherAviate  = getAviateLauncher();
 	public static Launcher launcherInspire  = getInspireLauncher();
 	public static Launcher launcherSmart  = getSmartLauncher();
+	public static Launcher launcherAtom = getAtomLauncher();
+	public static Launcher launcherGo = getGoLauncher();
+	public static Launcher launcherNext = getNextLauncher();
 	
 	// Static Launcher List
 	public static List<Launcher> launcherList = getLauncherList();
@@ -142,9 +148,57 @@ public class PkApplyLauncher
 				catch(ActivityNotFoundException e) {
 					return false;
 				}
-			default:
-				// TODO Add Generic Apply Code
-				return false;
+			case ATOM:
+				try {
+					Intent atom = new Intent(launcher.getAction());
+					atom.setPackage(launcher.getPackage());
+					atom.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					atom.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(atom);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case GO:
+				try {
+					Intent go = activity.getPackageManager().getLaunchIntentForPackage(launcher.getPackage());
+					go.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					go.putExtra("type", 1);
+					activity.startActivity(go);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			case NEXT:
+				try {
+					Intent next = new Intent(launcher.getAction());
+					next.setPackage(launcher.getPackage());
+					next.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(next);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
+			default: // Generic Apply Code
+				try {
+					Intent generic = new Intent(launcher.getAction());
+					generic.setPackage(launcher.getPackage());
+					generic.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					generic.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					activity.startActivity(generic);
+					
+					return true;
+				}
+				catch(ActivityNotFoundException e) {
+					return false;
+				}
 		}
 	}
 	
@@ -166,6 +220,9 @@ public class PkApplyLauncher
 		list.add(launcherAviate);
 		list.add(launcherInspire);
 		list.add(launcherSmart);
+		list.add(launcherAtom);
+		list.add(launcherGo);
+		list.add(launcherNext);
 		
 		return list;
 	}
@@ -227,7 +284,6 @@ public class PkApplyLauncher
 		launcher.setPackage("com.actionlauncher.playstore");
 		launcher.setAction("android.intent.action.MAIN"); // TODO TEST THROUGHOULY
 		launcher.putExtra("PACKAGE", "apply_icon_pack");
-		// TODO Maybe limit component
 		
 		return launcher;
 	}
@@ -264,6 +320,42 @@ public class PkApplyLauncher
 		launcher.setPackage("ginlemon.flowerfree");
 		launcher.setAction("ginlemon.smartlauncher.setGSLTHEME");
 		launcher.putExtra("PACKAGE", "package");
+		
+		return launcher;
+	}
+	
+	public static Launcher getAtomLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(ATOM);
+		launcher.setName("Atom");
+		launcher.setPackage("com.dlto.atom.launcher");
+		launcher.setAction("com.dlto.atom.launcher.intent.action.ACTION_VIEW_THEME_SETTINGS");
+		launcher.putExtra("PACKAGE", "packageName");
+		
+		return launcher;
+	}
+	
+	public static Launcher getGoLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(GO);
+		launcher.setName("Go");
+		launcher.setPackage("com.gau.go.launcherex");
+		launcher.setAction("com.gau.go.launcherex.MyThemes.mythemeaction");
+		launcher.putExtra("PACKAGE", "pkgname");
+		
+		return launcher;
+	}
+	
+	public static Launcher getNextLauncher()
+	{
+		Launcher launcher = new Launcher();
+		launcher.setLauncher(NEXT);
+		launcher.setName("Next");
+		launcher.setPackage("com.gtp.nextlauncher");
+		launcher.setAction("com.gtp.nextlauncher.themeManager.ThemeManageActivity");
+		launcher.putExtra("PACKAGE", "pkgname");
 		
 		return launcher;
 	}
