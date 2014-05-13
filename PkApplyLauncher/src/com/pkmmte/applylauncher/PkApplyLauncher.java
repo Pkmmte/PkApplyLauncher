@@ -12,6 +12,8 @@ public class PkApplyLauncher
 {
 	// General Private Constants
 	private static final String MARKET_URI = "market://details?id=";
+	private static final String MARKET_URL = "https://play.google.com/store/apps/details?id=";
+	private static final String PACKAGE_KEY = "PACKAGE";
 
 	// Launcher Type Constants
 	public static final int ACTION = 0;
@@ -50,7 +52,7 @@ public class PkApplyLauncher
 					Intent action = activity.getPackageManager().getLaunchIntentForPackage(launcher.getPackage());
 					if(action == null)
 						return false;
-					action.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					action.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					activity.startActivity(action);
 
 					return true;
@@ -62,7 +64,7 @@ public class PkApplyLauncher
 				try {
 					Intent adw = new Intent(launcher.getAction());
 					adw.setPackage(launcher.getPackage());
-					adw.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					adw.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					adw.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(adw);
 
@@ -75,7 +77,7 @@ public class PkApplyLauncher
 				try {
 					Intent atom = new Intent(launcher.getAction());
 					atom.setPackage(launcher.getPackage());
-					atom.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					atom.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					atom.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(atom);
 
@@ -88,7 +90,7 @@ public class PkApplyLauncher
 				try {
 					Intent aviate = new Intent(launcher.getAction());
 					aviate.setPackage(launcher.getPackage());
-					aviate.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					aviate.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					aviate.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(aviate);
 
@@ -104,7 +106,7 @@ public class PkApplyLauncher
 						return false;
 					Intent go = new Intent(launcher.getAction());
 					go.putExtra("type", 1);
-					go.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					go.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					activity.sendBroadcast(go);
 					activity.startActivity(goApply);
 
@@ -117,7 +119,7 @@ public class PkApplyLauncher
 				try {
 					Intent holo = new Intent(launcher.getAction());
 					holo.setPackage(launcher.getPackage());
-					holo.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					holo.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					holo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(holo);
 
@@ -130,7 +132,7 @@ public class PkApplyLauncher
 				try {
 					Intent inspire = new Intent(launcher.getAction());
 					inspire.setPackage(launcher.getPackage());
-					inspire.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					inspire.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					inspire.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(inspire);
 
@@ -146,7 +148,7 @@ public class PkApplyLauncher
 						return false;
 					Intent next = new Intent(launcher.getAction());
 					next.putExtra("type", 1);
-					next.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					next.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					activity.sendBroadcast(next);
 					activity.startActivity(nextApply);
 
@@ -160,7 +162,7 @@ public class PkApplyLauncher
 					Intent nova = new Intent(launcher.getAction());
 					nova.setPackage(launcher.getPackage());
 					nova.putExtra(launcher.getExtraString("TYPE"), "GO");
-					nova.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					nova.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					nova.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(nova);
 
@@ -173,7 +175,7 @@ public class PkApplyLauncher
 				try {
 					Intent smart = new Intent(launcher.getAction());
 					smart.setPackage(launcher.getPackage());
-					smart.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					smart.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					smart.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(smart);
 
@@ -187,7 +189,7 @@ public class PkApplyLauncher
 				try {
 					Intent generic = new Intent(launcher.getAction());
 					generic.setPackage(launcher.getPackage());
-					generic.putExtra(launcher.getExtraString("PACKAGE"), packageName);
+					generic.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
 					generic.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					activity.startActivity(generic);
 
@@ -202,7 +204,7 @@ public class PkApplyLauncher
 	public static void launchPlayStore(Launcher launcher, Activity activity)
 	{
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setData(Uri.parse(MARKET_URI + launcher.getPackage()));
+		intent.setData(Uri.parse(MARKET_URL + launcher.getPackage()));
 		activity.startActivity(intent);
 	}
 
@@ -231,7 +233,7 @@ public class PkApplyLauncher
 		launcher.setName("Action");
 		launcher.setPackage("com.actionlauncher.playstore");
 		launcher.setAction("android.intent.action.MAIN");
-		launcher.putExtra("PACKAGE", "apply_icon_pack");
+		launcher.putExtra(PACKAGE_KEY, "apply_icon_pack");
 
 		return launcher;
 	}
@@ -243,7 +245,7 @@ public class PkApplyLauncher
 		launcher.setName("ADW");
 		launcher.setPackage("org.adw.launcher");
 		launcher.setAction("org.adw.launcher.SET_THEME");
-		launcher.putExtra("PACKAGE", "org.adw.launcher.theme.NAME");
+		launcher.putExtra(PACKAGE_KEY, "org.adw.launcher.theme.NAME");
 
 		return launcher;
 	}
@@ -255,7 +257,7 @@ public class PkApplyLauncher
 		launcher.setName("Apex");
 		launcher.setPackage("com.anddoes.launcher");
 		launcher.setAction("com.anddoes.launcher.SET_THEME");
-		launcher.putExtra("PACKAGE", "com.anddoes.launcher.THEME_PACKAGE_NAME");
+		launcher.putExtra(PACKAGE_KEY, "com.anddoes.launcher.THEME_PACKAGE_NAME");
 
 		return launcher;
 	}
@@ -267,7 +269,7 @@ public class PkApplyLauncher
 		launcher.setName("Atom");
 		launcher.setPackage("com.dlto.atom.launcher");
 		launcher.setAction("com.dlto.atom.launcher.intent.action.ACTION_VIEW_THEME_SETTINGS");
-		launcher.putExtra("PACKAGE", "packageName");
+		launcher.putExtra(PACKAGE_KEY, "packageName");
 
 		return launcher;
 	}
@@ -279,7 +281,7 @@ public class PkApplyLauncher
 		launcher.setName("Aviate");
 		launcher.setPackage("com.tul.aviate");
 		launcher.setAction("com.tul.aviate.SET_THEME");
-		launcher.putExtra("PACKAGE", "THEME_PACKAGE");
+		launcher.putExtra(PACKAGE_KEY, "THEME_PACKAGE");
 
 		return launcher;
 	}
@@ -291,7 +293,7 @@ public class PkApplyLauncher
 		launcher.setName("Go");
 		launcher.setPackage("com.gau.go.launcherex");
 		launcher.setAction("com.gau.go.launcherex.MyThemes.mythemeaction");
-		launcher.putExtra("PACKAGE", "pkgname");
+		launcher.putExtra(PACKAGE_KEY, "pkgname");
 
 		return launcher;
 	}
@@ -303,7 +305,7 @@ public class PkApplyLauncher
 		launcher.setName("Holo");
 		launcher.setPackage("com.mobint.hololauncher");
 		launcher.setAction("com.mobint.hololauncher.SettingsActivity");
-		launcher.putExtra("PACKAGE", "pkgname");
+		launcher.putExtra(PACKAGE_KEY, "pkgname");
 
 		return launcher;
 	}
@@ -315,7 +317,7 @@ public class PkApplyLauncher
 		launcher.setName("Inspire");
 		launcher.setPackage("com.bam.android.inspirelauncher");
 		launcher.setAction("com.bam.android.inspirelauncher.action.ACTION_SET_THEME");
-		launcher.putExtra("PACKAGE", "theme_name");
+		launcher.putExtra(PACKAGE_KEY, "theme_name");
 
 		return launcher;
 	}
@@ -327,7 +329,7 @@ public class PkApplyLauncher
 		launcher.setName("Next");
 		launcher.setPackage("com.gtp.nextlauncher");
 		launcher.setAction("com.gau.go.launcherex.MyThemes.mythemeaction");
-		launcher.putExtra("PACKAGE", "pkgname");
+		launcher.putExtra(PACKAGE_KEY, "pkgname");
 
 		return launcher;
 	}
@@ -340,7 +342,7 @@ public class PkApplyLauncher
 		launcher.setPackage("com.teslacoilsw.launcher");
 		launcher.setAction("com.teslacoilsw.launcher.APPLY_ICON_THEME");
 		launcher.putExtra("TYPE", "com.teslacoilsw.launcher.extra.ICON_THEME_TYPE");
-		launcher.putExtra("PACKAGE", "com.teslacoilsw.launcher.extra.ICON_THEME_PACKAGE");
+		launcher.putExtra(PACKAGE_KEY, "com.teslacoilsw.launcher.extra.ICON_THEME_PACKAGE");
 
 		return launcher;
 	}
@@ -352,7 +354,7 @@ public class PkApplyLauncher
 		launcher.setName("Smart");
 		launcher.setPackage("ginlemon.flowerfree");
 		launcher.setAction("ginlemon.smartlauncher.setGSLTHEME");
-		launcher.putExtra("PACKAGE", "package");
+		launcher.putExtra(PACKAGE_KEY, "package");
 
 		return launcher;
 	}
