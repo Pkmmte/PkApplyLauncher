@@ -136,7 +136,7 @@ public class PkApplyLauncher
 						return false;
 					Intent inspire = new Intent(launcher.getAction());
 					inspire.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
-					activity.sendBroadcast(putExtra);
+					activity.sendBroadcast(inspire);
 					activity.startActivity(inspireMain);
 					
 					return true;
