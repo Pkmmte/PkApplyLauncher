@@ -130,12 +130,15 @@ public class PkApplyLauncher
 				}
 			case INSPIRE:
 				try {
+					Intent inspireMain = activity.getPackageManager().
+						getLaunchIntentForPackage(launcher.getPackage());
+					if(inspireMain == null)
+						return false;
 					Intent inspire = new Intent(launcher.getAction());
-					inspire.setPackage(launcher.getPackage());
 					inspire.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
-					inspire.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					activity.startActivity(inspire);
-
+					activity.sendBroadcast(putExtra);
+					activity.startActivity(inspireMain);
+					
 					return true;
 				}
 				catch(ActivityNotFoundException e) {
