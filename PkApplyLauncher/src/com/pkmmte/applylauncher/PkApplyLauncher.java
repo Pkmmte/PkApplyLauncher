@@ -136,7 +136,7 @@ public class PkApplyLauncher
 						return false;
 					Intent inspire = new Intent(launcher.getAction());
 					inspire.putExtra(launcher.getExtraString(PACKAGE_KEY), packageName);
-					activity.sendBroadcast(putExtra);
+					activity.sendBroadcast(inspire);
 					activity.startActivity(inspireMain);
 					
 					return true;
@@ -219,9 +219,9 @@ public class PkApplyLauncher
 		list.add(launcherApex);
 		list.add(launcherAtom);
 		list.add(launcherAviate);
-		list.add(launcherInspire);
 		list.add(launcherGo);
 		list.add(launcherHolo);
+		list.add(launcherInspire);
 		list.add(launcherNext);
 		list.add(launcherNova);
 		list.add(launcherSmart);
